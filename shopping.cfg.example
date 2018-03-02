@@ -1,0 +1,2 @@
+SECRET_KEY = 'very very secret key replace with real one'  # noqa
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://testdb:testpass@localhost/testdb'

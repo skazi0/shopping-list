@@ -1,0 +1,11 @@
+env
+venv
+bower_components
+__pycahe__
+*.pyc
+*.sqlite
+.DS_Store
+env.sh
+blog.md
+_old
+shopping.cfg
