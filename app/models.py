@@ -3,41 +3,43 @@ from decimal import Decimal
 from sqlalchemy import func
 from sqlalchemy.schema import ForeignKey, UniqueConstraint
 
-from app import db, bcrypt
+from app import db
 
 
-class User(db.Model):
+class Item(db.Model):
 
-    __tablename__ = "users"
+    __tablename__ = "items"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    login = db.Column(db.String(63), unique=True, nullable=False)
-    email = db.Column(db.String(255), unique=True, nullable=False)
-    password = db.Column(db.String(255), nullable=False)
-    registered_on = db.Column(db.DateTime, nullable=False)
-    admin = db.Column(db.Boolean, nullable=False, default=False)
-
-    def __init__(self, login, email, password, admin=False):
-        self.login = login
-        self.email = email
-        self.password = bcrypt.generate_password_hash(password)
-        self.registered_on = datetime.datetime.now()
-        self.admin = admin
-
-    def check_password(self, password):
-        return bcrypt.check_password_hash(self.password, password)
-
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        return self.id
+    name = db.Column(db.String(50), unique=True, nullable=False)
+    category_id = db.Column(db.Integer, ForeignKey('categories.id'), nullable=False)
 
     def __repr__(self):
-        return '<User {0}>'.format(self.login)
+        return '<Item {0}>'.format(self.name)
+
+
+class Category(db.Model):
+
+    __tablename__ = "categories"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(100), unique=True, nullable=False)
+    priority = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return '<Category {0}>'.format(self.name)
+
+
+class LogEntry(db.Model):
+
+    __tablename__ = "log"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    item_id = db.Column(db.Integer, ForeignKey('items.id'), nullable=False)
+    # server_default is needed to avoid default behavior for TIMESTAMP fields where ON UPDATE CURRENT_TIMESTAMP is auto-added
+    added_date = db.Column(db.TIMESTAMP, nullable=False, default=func.now(), server_default=db.text('CURRENT_TIMESTAMP'))
+    bought_date = db.Column(db.TIMESTAMP, nullable=True)
+    comment = db.Column(db.String(100), nullable=True)
+
+    def __repr__(self):
+        return '<LogEntry {0}>'.format(self.name)
