@@ -12,7 +12,8 @@ class Item(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), unique=True, nullable=False)
-    category_id = db.Column(db.Integer, ForeignKey('categories.id'), nullable=False)
+    category_id = db.Column(db.Integer, ForeignKey('categories.id'),
+                            nullable=False)
 
     def __repr__(self):
         return '<Item {0}>'.format(self.name)
@@ -36,8 +37,10 @@ class LogEntry(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     item_id = db.Column(db.Integer, ForeignKey('items.id'), nullable=False)
-    # server_default is needed to avoid default behavior for TIMESTAMP fields where ON UPDATE CURRENT_TIMESTAMP is auto-added
-    added_date = db.Column(db.TIMESTAMP, nullable=False, default=func.now(), server_default=db.text('CURRENT_TIMESTAMP'))
+    # server_default is needed to avoid default behavior for TIMESTAMP fields
+    # where ON UPDATE CURRENT_TIMESTAMP is auto-added
+    added_date = db.Column(db.TIMESTAMP, nullable=False, default=func.now(),
+                           server_default=db.text('CURRENT_TIMESTAMP'))
     bought_date = db.Column(db.TIMESTAMP, nullable=True)
     comment = db.Column(db.String(100), nullable=True)
 
