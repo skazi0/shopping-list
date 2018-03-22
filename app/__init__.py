@@ -22,7 +22,7 @@ class SQLAlchemy(SQLAlchemyBase):
     options.pop('pool_size', None)
 
 db = SQLAlchemy(app)
-api = Api(app)
+api = Api(app, validate=True)
 
 # import here to have db and api defined already
 from app.models import *  # noqa
