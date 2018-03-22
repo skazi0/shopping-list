@@ -8,18 +8,23 @@ app = Flask(__name__)
 app.config.from_object(BaseConfig)
 app.config.from_envvar('APP_CONFIG')
 
-# disable pooling to avoid MySQL warnings about unused connections
-# begin closed (e.g. [Warning] Aborted connection (...) (Got an error reading communication packets)
+# disable pooling to avoid MySQL warnings about unused connections being closed
+# [Warning] Aborted connection (...) (Got an error reading communication packets # noqa
 
 # skz: monkey patch SQLAlchemy class until
 # https://github.com/mitsuhiko/flask-sqlalchemy/issues/266
 # is fixed
-from sqlalchemy.pool import NullPool
+from sqlalchemy.pool import NullPool  # noqa
+
+
 class SQLAlchemy(SQLAlchemyBase):
-  def apply_driver_hacks(self, app, info, options):
-    super(SQLAlchemy, self).apply_driver_hacks(app, info, options)
-    options['poolclass'] = NullPool
-    options.pop('pool_size', None)
+    def apply_driver_hacks(self, app, info, options):
+        super(SQLAlchemy, self).apply_driver_hacks(app, info, options)
+        options['poolclass'] = NullPool
+        options.pop('pool_size', None)
+
+
+# end of monkey patch
 
 db = SQLAlchemy(app)
 api = Api(app, validate=True)
@@ -37,6 +42,7 @@ def date_filter(s):
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
+
 
 @app.teardown_appcontext
 def close_db_connections(exception=None):

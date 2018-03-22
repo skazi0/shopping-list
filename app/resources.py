@@ -79,7 +79,8 @@ class ToBuyList(Resource):
         try:
             args = utils.cut_to_model(request.get_json(), tobuy_add_fields)
 
-            old_entry = LogEntry.query.filter_by(item_id=args['item_id'], bought_date=None).first()
+            old_entry = LogEntry.query.filter_by(item_id=args['item_id'],
+                                                 bought_date=None).first()
             if old_entry is not None:
                 raise Conflict('item already in to-buy')
 
