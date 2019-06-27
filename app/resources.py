@@ -6,9 +6,8 @@ from sqlalchemy.orm.exc import NoResultFound
 from io import BytesIO
 import json
 
-from app import db, api
+from app import db, api, utils
 from app.models import *
-import utils
 
 category_fields = api.model('Category', {
     'id': fields.Integer,

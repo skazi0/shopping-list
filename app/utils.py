@@ -1,6 +1,6 @@
 def cut_to_model(data, model):
     ret = {}
-    for k, v in data.iteritems():
+    for k, v in data.items():
         if k in model:
             ret[k] = v
     return ret
