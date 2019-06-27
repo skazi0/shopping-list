@@ -27,7 +27,7 @@ class SQLAlchemy(SQLAlchemyBase):
 # end of monkey patch
 
 db = SQLAlchemy(app)
-api = Api(app, validate=True)
+api = Api(app, validate=True, prefix='/api', doc='/api')
 
 # import here to have db and api defined already
 from app.models import *  # noqa
