@@ -41,7 +41,7 @@ def date_filter(s):
 
 @app.route('/')
 def index():
-    return app.send_static_file('index.html')
+    return render_template('index.html')
 
 
 @app.teardown_appcontext
