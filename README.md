@@ -1,4 +1,5 @@
 ## Shopping List App
+# backend
 # usage
 - git clone https://github.com/skazi0/flask-skeleton.git
 - virtualenv venv
@@ -10,3 +11,7 @@
 - python manage.py db init
 # run dev server
 - python manage.py runserver
+
+# frontend
+npm install
+npm run build

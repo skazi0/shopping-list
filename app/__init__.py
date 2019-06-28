@@ -8,6 +8,13 @@ app = Flask(__name__)
 app.config.from_object(BaseConfig)
 app.config.from_envvar('APP_CONFIG')
 
+
+# register before creating API to avoid overwriting
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+
 # disable pooling to avoid MySQL warnings about unused connections being closed
 # [Warning] Aborted connection (...) (Got an error reading communication packets # noqa
 
@@ -27,7 +34,7 @@ class SQLAlchemy(SQLAlchemyBase):
 # end of monkey patch
 
 db = SQLAlchemy(app)
-api = Api(app, validate=True, prefix='/api', doc='/api')
+api = Api(app, validate=True, doc='/api/')
 
 # import here to have db and api defined already
 from app.models import *  # noqa
@@ -37,11 +44,6 @@ from app.resources import *  # noqa
 @app.template_filter('date')
 def date_filter(s):
     return s.split('T')[0] if s is not None else s
-
-
-@app.route('/')
-def index():
-    return render_template('index.html')
 
 
 @app.teardown_appcontext
