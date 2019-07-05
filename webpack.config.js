@@ -2,13 +2,19 @@ var path = require('path')
 var webpack = require('webpack')
 var confenv = require('dotenv').config()
 
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+
 module.exports = {
+  mode: process.env.NODE_ENV,
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './app/static/dist'),
     publicPath: '/static/dist/',
     filename: 'build.js'
   },
+  plugins: [
+    new VueLoaderPlugin()
+  ],
   module: {
     rules: [
       {
@@ -104,17 +110,14 @@ module.exports = {
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'
+  module.exports.optimization = {
+    minimize: true
+  }
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
       }
     }),
     new webpack.LoaderOptionsPlugin({
