@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+var confenv = require('dotenv').config()
 
 module.exports = {
   entry: './src/main.js',
@@ -81,6 +82,16 @@ module.exports = {
     extensions: ['*', '.js', '.vue', '.json']
   },
   devServer: {
+    proxy: {
+      '/shopping/api': {
+        // put "API_HOST=..." in .env file
+        target: 'http://' + process.env.API_HOST + '/',
+        secure: false,
+        headers: {
+          'Host': process.env.API_HOST
+        }
+      }
+    },
     historyApiFallback: true,
     noInfo: true,
     overlay: true
