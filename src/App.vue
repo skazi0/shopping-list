@@ -1,7 +1,7 @@
 <template>
   <div class="shopping-app container">
-    <search></search>
-    <items></items>
+    <search v-bind:items="items"></search>
+    <items v-bind:items="items"></items>
   </div>
 </template>
 
@@ -18,11 +18,20 @@ export default {
   },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App 2'
+      msg: 'Welcome to Your Vue.js App 2',
+      items: [],
     }
   },
   computed: {
-  }
+  },
+  mounted() {
+    fetch(config.baseUrl + '/api/items')
+      .then(response => response.json())
+      .then((data) => {
+        this.items = data;
+      })
+  },
+
 }
 </script>
 

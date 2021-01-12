@@ -9,17 +9,12 @@ import config from '../config.js';
 
 export default {
   name: 'items',
+  props: {
+    items: Array,
+  },
   data() {
     return {
-      items: []
     }
-  },
-  mounted() {
-    fetch(config.baseUrl + '/api/items')
-      .then(response => response.json())
-      .then((data) => {
-        this.items = data;
-      })
   },
 }
 
