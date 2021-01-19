@@ -1,34 +1,10 @@
 import datetime
 from decimal import Decimal
-from sqlalchemy import func
+from sqlalchemy import select, func
 from sqlalchemy.schema import ForeignKey, UniqueConstraint
+from sqlalchemy.orm import column_property
 
 from app import db
-
-
-class Item(db.Model):
-
-    __tablename__ = "items"
-
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(50), unique=True, nullable=False)
-    category_id = db.Column(db.Integer, ForeignKey('categories.id'),
-                            nullable=False)
-
-    def __repr__(self):
-        return '<Item {0}>'.format(self.name)
-
-
-class Category(db.Model):
-
-    __tablename__ = "categories"
-
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(100), unique=True, nullable=False)
-    priority = db.Column(db.Integer, nullable=False)
-
-    def __repr__(self):
-        return '<Category {0}>'.format(self.name)
 
 
 class LogEntry(db.Model):
@@ -46,3 +22,33 @@ class LogEntry(db.Model):
 
     def __repr__(self):
         return '<LogEntry {0}>'.format(self.name)
+
+
+class Item(db.Model):
+
+    __tablename__ = "items"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(50), unique=True, nullable=False)
+    category_id = db.Column(db.Integer, ForeignKey('categories.id'),
+                            nullable=False)
+
+    count = column_property(select([func.count(LogEntry.bought_date)]).
+                            where(LogEntry.item_id==id).
+                            correlate_except(LogEntry))
+
+    def __repr__(self):
+        return '<Item {0}>'.format(self.name)
+
+
+class Category(db.Model):
+
+    __tablename__ = "categories"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(100), unique=True, nullable=False)
+    priority = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return '<Category {0}>'.format(self.name)
+

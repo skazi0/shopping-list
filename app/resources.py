@@ -34,6 +34,7 @@ item_fields = api.model('Item', {
     'id': fields.Integer,
     'name': fields.String,
     'category_id': fields.Integer,
+    'count': fields.Integer,
 })
 
 
