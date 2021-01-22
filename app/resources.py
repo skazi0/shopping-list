@@ -68,6 +68,11 @@ class ItemsList(Resource):
         return item
 
 
+item_mod_fields = api.model('ItemMod', {
+    'category_id': fields.Integer,
+})
+
+
 @api.route('/api/items/<int:id>')
 class Items(Resource):
     @api.marshal_with(item_fields)
@@ -81,6 +86,21 @@ class Items(Resource):
         db.session.delete(item)
         db.session.commit()
         return {'message': 'item removed'}
+
+    @api.marshal_with(item_fields)
+    @api.expect(item_mod_fields)
+    def patch(self, id):
+        args = utils.cut_to_model(request.get_json(), item_mod_fields)
+
+        item = Item.query.filter_by(id=id).first()
+        if item is None:
+            raise NotFound('item not found')
+
+        utils.update_from_args(item, args)
+
+        db.session.commit()
+
+        return item
 
 
 tobuy_fields = api.model('ToBuy', {
