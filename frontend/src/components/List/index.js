@@ -1,41 +1,35 @@
-import React, { useEffect, useState } from "react";
-import ListItem from "../ListItem";
+import React, { useContext } from "react";
+import { List as AList, Divider } from "antd";
+import { FixedSizeList } from "react-window";
 
-// const list2dict = (list) => {
-//   return list.reduce((a, x) => ({ ...a, [x.id]: x }), {});
-// };
+import ListItem from "../ListItem";
+import Search from "../Search";
+
+import { Store } from "../../data/Store";
 
 const List = () => {
-  const [items, setItems] = useState([]);
+  const { items } = useContext(Store);
 
-  const getItems = async () => {
-    const url = "api/items";
-
-    const response = await fetch(url);
-    const items = await response.json();
-    setItems(items);
-  };
-
-  useEffect(() => {
-    getItems();
-  }, []);
-
-  // const setItemCategory = useCallback(
-  //   (itemId, category) => {
-  //     // TODO: call api
-  //     setItems({
-  //       ...items,
-  //       [itemId]: { ...items[itemId], category_id: category.id },
-  //     });
-  //   },
-  //   [items]
-  // );
+  const Row = ({ index, style }) => (
+    <AList.Item style={style}>
+      <ListItem key={items[index].id} item={items[index]} />
+    </AList.Item>
+  );
 
   return (
-    <div>
-      {items.map((item) => (
-        <ListItem key={item.id} item={item} />
-      ))}
+    <div style={{ border: "1px solid red", width: "350px" }}>
+      <Search items={items} />
+      <Divider style={{ clear: "none" }} />
+      <AList size="small">
+        <FixedSizeList
+          height={window.innerHeight}
+          itemCount={items.length}
+          itemSize={30}
+          overscanCount={10}
+        >
+          {Row}
+        </FixedSizeList>
+      </AList>
     </div>
   );
 };

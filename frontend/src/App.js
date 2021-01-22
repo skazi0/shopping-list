@@ -1,12 +1,15 @@
 import React from "react";
 import List from "./components/List";
-import { DataStore } from "./data/Store";
-//import logo from "./logo.svg";
-import "./App.css";
+import ToBuy from "./components/ToBuy";
+
+import DataStore from "./data/Store";
+
+import "./App.less";
 
 function App() {
   return (
     <DataStore>
+      <ToBuy />
       <List />
     </DataStore>
   );

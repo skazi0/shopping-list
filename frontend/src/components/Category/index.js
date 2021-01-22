@@ -1,31 +1,34 @@
 import React, { useContext } from "react";
+import { Menu, Dropdown, Button } from "antd";
 
-import Store from "../../data/Store";
+import { Store } from "../../data/Store";
 
 const Category = ({ categoryId: currentId, onChange }) => {
   const { categories } = useContext(Store);
 
+  const menu = (
+    <Menu>
+      {categories.map((category) => (
+        <Menu.Item key={category.id}>
+          <span
+            onClick={() => {
+              onChange(category);
+            }}
+            style={{ color: category.id === currentId ? "red" : "black" }}
+          >
+            {category.name}
+          </span>
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
+
   return (
-    <div>
-      <ul style={{ display: "none1" }}>
-        {categories.map((category) => (
-          <li key={category.id}>
-            <span
-              style={{ color: category.id === currentId ? "red" : "black" }}
-            >
-              {category.name}
-            </span>
-            <button
-              onClick={() => {
-                onChange(category);
-              }}
-            >
-              select
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Dropdown overlay={menu} trigger={["click"]}>
+      <Button type="default" size="small">
+        {currentId}
+      </Button>
+    </Dropdown>
   );
 };
 
