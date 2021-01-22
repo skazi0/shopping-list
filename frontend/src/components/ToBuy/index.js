@@ -30,7 +30,7 @@ const ToBuy = () => {
   return (
     <div style={{ float: "right", border: "1px solid blue" }}>
       {itemsCategoryTree().map((category) => (
-        <>
+        <div key={category.id}>
           <Divider plain orientation="left">
             {category.name}
           </Divider>
@@ -40,7 +40,7 @@ const ToBuy = () => {
               <span>[{tb.comment}]</span>
             </div>
           ))}
-        </>
+        </div>
       ))}
     </div>
   );
