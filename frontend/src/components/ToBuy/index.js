@@ -22,7 +22,9 @@ const ToBuy = () => {
     return usedCategories
       .map((categoryId) => ({
         ...findByID(categories, categoryId),
-        tobuy: tobuyItems.filter((tb) => tb.item.category_id === categoryId),
+        tobuy: tobuyItems
+          .filter((tb) => tb.item.category_id === categoryId)
+          .sort((a, b) => a.item.name.localeCompare(b.item.name)),
       }))
       .sort((a, b) => b.priority - a.priority);
   };
