@@ -17,7 +17,7 @@ const List = () => {
   );
 
   return (
-    <div style={{ border: "1px solid red", width: "350px" }}>
+    <div style={{ border: "1px solid red", width: "25rem" }}>
       <Search items={items} />
       <Divider style={{ clear: "none" }} />
       <AList size="small">
@@ -25,7 +25,7 @@ const List = () => {
           height={window.innerHeight}
           itemCount={items.length}
           itemSize={30}
-          overscanCount={10}
+          overscanCount={20}
         >
           {Row}
         </FixedSizeList>
