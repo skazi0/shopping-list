@@ -51,6 +51,14 @@ class Items(Resource):
     def get(self, id):
         return Item.query.get(id)
 
+    def delete(self, id):
+        item = Item.query.get(id)
+        if item is None:
+            raise NotFound('item not found')
+        db.session.delete(item)
+        db.session.commit()
+        return {'message': 'item removed'}
+
 
 tobuy_fields = api.model('ToBuy', {
     'id': fields.Integer,
@@ -129,7 +137,7 @@ class ToBuy(Resource):
             raise NotFound('to-buy entry not found')
         db.session.delete(entry)
         db.session.commit()
-        return {'message': 'item removed'}
+        return {'message': 'item removed from to-buy'}
 
 
 @api.route('/api/tobuy/<int:id>/actions/<action>')

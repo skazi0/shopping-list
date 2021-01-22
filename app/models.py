@@ -2,7 +2,7 @@ import datetime
 from decimal import Decimal
 from sqlalchemy import select, func
 from sqlalchemy.schema import ForeignKey, UniqueConstraint
-from sqlalchemy.orm import column_property
+from sqlalchemy.orm import column_property, relationship
 
 from app import db
 
@@ -20,6 +20,8 @@ class LogEntry(db.Model):
     bought_date = db.Column(db.TIMESTAMP, nullable=True)
     comment = db.Column(db.String(100), nullable=True)
 
+    item = relationship("Item", back_populates="log_entries")
+
     def __repr__(self):
         return '<LogEntry {0}>'.format(self.name)
 
@@ -32,6 +34,10 @@ class Item(db.Model):
     name = db.Column(db.String(50), unique=True, nullable=False)
     category_id = db.Column(db.Integer, ForeignKey('categories.id'),
                             nullable=False)
+
+    log_entries = relationship("LogEntry",
+                               back_populates="item", 
+                               cascade="all, delete-orphan")
 
     count = column_property(select([func.count(LogEntry.bought_date)]).
                             where(LogEntry.item_id==id).
@@ -48,6 +54,8 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(100), unique=True, nullable=False)
     priority = db.Column(db.Integer, nullable=False)
+
+    items = relationship("Item")
 
     def __repr__(self):
         return '<Category {0}>'.format(self.name)
