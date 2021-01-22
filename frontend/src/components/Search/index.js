@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import unidecode from "unidecode";
 import { AutoComplete, Input, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
@@ -21,10 +22,13 @@ const Search = ({ items }) => {
     setFound(
       items
         .filter((item) => {
+          const basicName = unidecode(item.name);
           // case insensitive match
-          const index = item.name.toLowerCase().indexOf(text.toLowerCase());
+          const index = basicName
+            .toLowerCase()
+            .indexOf(unidecode(text.toLowerCase()));
           // only take results matching start of word
-          return index !== -1 && (index === 0 || item.name[index - 1] === " ");
+          return index !== -1 && (index === 0 || basicName[index - 1] === " ");
         })
         .sort((a, b) => b.count - a.count)
         .slice(0, 15)
