@@ -38,11 +38,34 @@ item_fields = api.model('Item', {
 })
 
 
+item_add_fields = api.model('ItemAdd', {
+    'name': fields.String(required=True),
+    'category_id': fields.Integer,
+})
+
+
 @api.route('/api/items')
 class ItemsList(Resource):
     @api.marshal_list_with(item_fields)
     def get(self):
         return Item.query.all()
+
+    @api.expect(item_add_fields)
+    @api.marshal_with(item_fields)
+    def post(self):
+        args = utils.cut_to_model(request.get_json(), item_add_fields)
+
+        old_item = Item.query.filter_by(name=args['name']).first()
+
+        if old_item is not None:
+            raise Conflict('item already exists')
+
+        item = Item(**args)
+
+        db.session.add(item)
+        db.session.commit()
+
+        return item
 
 
 @api.route('/api/items/<int:id>')
