@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { Divider } from "antd";
 
+import Search from "../Search";
+
 import { Store } from "../../data/Store";
 
 import { findByID } from "../../utils";
@@ -30,7 +32,8 @@ const ToBuy = () => {
   };
 
   return (
-    <div style={{ float: "right", border: "1px solid blue" }}>
+    <div style={{ border: "1px solid blue", width: "25rem" }}>
+      <Search items={items} />
       {itemsCategoryTree().map((category) => (
         <div key={category.id}>
           <Divider plain orientation="left">

@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
-import { List as AList, Divider } from "antd";
+import { List as AList } from "antd";
 import { FixedSizeList } from "react-window";
 
 import ListItem from "../ListItem";
-import Search from "../Search";
 
 import { Store } from "../../data/Store";
 
@@ -18,8 +17,6 @@ const List = () => {
 
   return (
     <div style={{ border: "1px solid red", width: "25rem" }}>
-      <Search items={items} />
-      <Divider style={{ clear: "none" }} />
       <AList size="small">
         <FixedSizeList
           height={window.innerHeight}
