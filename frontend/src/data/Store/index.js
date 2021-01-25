@@ -17,10 +17,23 @@ export const Dispatch = React.createContext({});
 
 const storeReducer = (state, action) => {
   switch (action.type) {
+    // general data setters (for loading)
     case "setCategories":
       return { ...state, categories: action.value };
     case "setItems":
       return { ...state, items: action.value };
+    case "setToBuy":
+      return { ...state, tobuy: action.value };
+
+    // user actions
+    case "addItem":
+      return { ...state, items: [action.value, ...state.items] };
+    case "deleteItem":
+      return {
+        ...state,
+        items: state.items.filter((item) => item.id !== action.value.id),
+        tobuy: state.tobuy.filter((tb) => tb.item_id !== action.value.id),
+      };
     case "setItemCategory": {
       const index = findIndexByID(state.items, action.item.id);
       return {
@@ -30,20 +43,10 @@ const storeReducer = (state, action) => {
         }),
       };
     }
-    case "setToBuy":
-      return { ...state, tobuy: action.value };
     case "addToBuy":
       return {
         ...state,
         tobuy: [...state.tobuy, action.value],
-      };
-    case "addItem":
-      return { ...state, items: [action.value, ...state.items] };
-    case "deleteItem":
-      return {
-        ...state,
-        items: state.items.filter((item) => item.id !== action.value.id),
-        tobuy: state.tobuy.filter((tb) => tb.item_id !== action.value.id),
       };
     default:
       throw new Error("Unknow action type");
