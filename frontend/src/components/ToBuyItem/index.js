@@ -9,8 +9,14 @@ import { Dispatch } from "../../data/Store";
 const ToBuyItem = ({ tb }) => {
   const dispatch = useContext(Dispatch);
 
-  const buy = (e) => {
-    console.log("bought: ", tb.item.name);
+  const markBought = async (e) => {
+    if (!e.target.checked) return;
+    try {
+      await toBuyApiService.runAction(tb.id, "buy");
+      dispatch({ type: "markBought", value: tb.id });
+    } catch (error) {
+      alert("error: " + error.message);
+    }
   };
   const setComment = async (text) => {
     try {
@@ -24,7 +30,7 @@ const ToBuyItem = ({ tb }) => {
   };
   return (
     <div>
-      <Checkbox onChange={buy}>{tb.item.name}</Checkbox>
+      <Checkbox onChange={markBought}>{tb.item.name}</Checkbox>
       <Typography.Text
         style={{ display: "inline-block" }}
         type="secondary"

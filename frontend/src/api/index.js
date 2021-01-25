@@ -61,6 +61,15 @@ class ApiService {
     }
     return data;
   }
+
+  async runAction(id, action) {
+    const response = await fetch(`${this.endpoint}/${id}/actions/${action}`);
+    const data = await response.json();
+    if (!response.ok) {
+      throw data;
+    }
+    return data;
+  }
 }
 
 export const itemsApiService = new ApiService("api/items");

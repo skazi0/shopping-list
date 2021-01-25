@@ -55,6 +55,11 @@ const storeReducer = (state, action) => {
         tobuy: patchItemAtIndex(state.tobuy, index, { comment: action.value }),
       };
     }
+    case "markBought":
+      return {
+        ...state,
+        tobuy: state.tobuy.filter((tb) => tb.id !== action.value),
+      };
     default:
       throw new Error("Unknow action type");
   }
