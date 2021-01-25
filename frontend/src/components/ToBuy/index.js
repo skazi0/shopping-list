@@ -14,7 +14,7 @@ const ToBuy = () => {
   const itemsCategoryTree = () => {
     const tobuyItems = tobuy.map((tb) => ({
       ...tb,
-      item: findByID(items, tb.item_id) || { name: "ERROR", category_id: 0 },
+      item: findByID(items, tb.item_id) || { name: "...", category_id: 0 },
     }));
     const usedCategories = tobuyItems.reduce(
       (ret, tb) =>

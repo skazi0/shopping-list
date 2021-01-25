@@ -23,7 +23,7 @@ const ToBuyItem = ({ tb }) => {
     }
   };
   return (
-    <div key={tb.id}>
+    <div>
       <Checkbox onChange={buy}>{tb.item.name}</Checkbox>
       <Typography.Text
         style={{ display: "inline-block" }}
