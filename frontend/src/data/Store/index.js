@@ -48,6 +48,13 @@ const storeReducer = (state, action) => {
         ...state,
         tobuy: [...state.tobuy, action.value],
       };
+    case "setToBuyComment": {
+      const index = findIndexByID(state.tobuy, action.tb.id);
+      return {
+        ...state,
+        tobuy: patchItemAtIndex(state.tobuy, index, { comment: action.value }),
+      };
+    }
     default:
       throw new Error("Unknow action type");
   }

@@ -14,7 +14,7 @@ const ToBuy = () => {
   const itemsCategoryTree = () => {
     const tobuyItems = tobuy.map((tb) => ({
       ...tb,
-      item: findByID(items, tb.item_id),
+      item: findByID(items, tb.item_id) || { name: "ERROR", category_id: 0 },
     }));
     const usedCategories = tobuyItems.reduce(
       (ret, tb) =>
@@ -33,15 +33,20 @@ const ToBuy = () => {
   };
 
   return (
-    <div style={{ border: "1px solid blue", width: "25rem" }}>
+    <div
+      style={{
+        border: "1px solid blue",
+        width: "25rem",
+        margin: "0 auto",
+        padding: "1rem",
+      }}
+    >
       <Search items={items} />
       {itemsCategoryTree().map((category) => (
         <div key={category.id}>
-          <Divider plain orientation="left">
-            {category.name}
-          </Divider>
+          <Divider orientation="left">{category.name}</Divider>
           {category.tobuy.map((tb) => (
-            <ToBuyItem tb={tb} />
+            <ToBuyItem key={tb.id} tb={tb} />
           ))}
         </div>
       ))}

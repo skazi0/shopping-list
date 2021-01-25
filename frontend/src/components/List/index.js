@@ -16,7 +16,14 @@ const List = () => {
   );
 
   return (
-    <div style={{ border: "1px solid red", width: "25rem" }}>
+    <div
+      style={{
+        border: "1px solid red",
+        width: "25rem",
+        margin: "0 auto",
+        padding: "1rem 0",
+      }}
+    >
       <AList size="small">
         <FixedSizeList
           height={window.innerHeight}
