@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Divider } from "antd";
 
 import Search from "../Search";
+import ToBuyItem from "../ToBuyItem";
 
 import { Store } from "../../data/Store";
 
@@ -40,10 +41,7 @@ const ToBuy = () => {
             {category.name}
           </Divider>
           {category.tobuy.map((tb) => (
-            <div key={tb.id}>
-              <span>{tb.item.name}</span>
-              <span>[{tb.comment}]</span>
-            </div>
+            <ToBuyItem tb={tb} />
           ))}
         </div>
       ))}
