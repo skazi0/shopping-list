@@ -3,6 +3,8 @@ import { Menu, Dropdown, Button } from "antd";
 
 import { Store } from "../../data/Store";
 
+import "./index.less";
+
 const Category = ({ categoryId: currentId, onChange }) => {
   const { categories } = useContext(Store);
 
@@ -14,7 +16,9 @@ const Category = ({ categoryId: currentId, onChange }) => {
             onClick={() => {
               onChange(category);
             }}
-            style={{ color: category.id === currentId ? "red" : "black" }}
+            className={
+              category.id === currentId ? "category current" : "category"
+            }
           >
             {category.name}
           </span>
