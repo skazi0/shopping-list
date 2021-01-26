@@ -33,14 +33,7 @@ const ToBuy = () => {
   };
 
   return (
-    <div
-      style={{
-        border: "1px solid blue",
-        width: "25rem",
-        margin: "0 auto",
-        padding: "1rem",
-      }}
-    >
+    <div className="panel" style={{ padding: "1rem" }}>
       <Search items={items} />
       {itemsCategoryTree().map((category) => (
         <div key={category.id}>

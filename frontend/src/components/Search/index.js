@@ -50,7 +50,7 @@ const Search = ({ items }) => {
   };
 
   const addToBuy = async (text) => {
-    console.log("adding", text);
+    // console.log("adding", text);
     let item = findByName(items, text);
     if (!item) {
       // TODO: check if items exists in the DB
@@ -100,7 +100,7 @@ const Search = ({ items }) => {
       onChange={setValue}
       onSearch={find}
       onSelect={(v, o) => {
-        console.log("select", v, o);
+        // console.log("select", v, o);
         addToBuyDebounce(v);
       }}
     >
@@ -108,7 +108,7 @@ const Search = ({ items }) => {
         size="small"
         placeholder="co kupić?"
         onSearch={(v, e) => {
-          console.log("search", v);
+          // console.log("search", v);
           addToBuyDebounce(v);
         }}
         enterButton={

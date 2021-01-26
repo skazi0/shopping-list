@@ -16,17 +16,10 @@ const List = () => {
   );
 
   return (
-    <div
-      style={{
-        border: "1px solid red",
-        width: "25rem",
-        margin: "0 auto",
-        padding: "1rem 0",
-      }}
-    >
+    <div className="panel">
       <AList size="small">
         <FixedSizeList
-          height={window.innerHeight}
+          height={window.innerHeight} // subtract size needed for header and padding
           itemCount={items.length}
           itemSize={30}
           overscanCount={20}

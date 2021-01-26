@@ -1,23 +1,37 @@
-import React, { useContext } from "react";
-import { Checkbox, Typography } from "antd";
-import { CheckOutlined } from "@ant-design/icons";
+import React, { useContext, useState } from "react";
+import { Checkbox, Typography, Button, Tooltip } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 
 import { toBuyApiService } from "../../api";
 
 import { Dispatch } from "../../data/Store";
 
+import "./index.less";
+
 const ToBuyItem = ({ tb }) => {
   const dispatch = useContext(Dispatch);
+  const [hover, setHover] = useState(false);
 
   const markBought = async (e) => {
     if (!e.target.checked) return;
     try {
       await toBuyApiService.runAction(tb.id, "buy");
-      dispatch({ type: "markBought", value: tb.id });
+      dispatch({ type: "deleteToBuy", value: tb.id });
     } catch (error) {
       alert("error: " + error.message);
     }
   };
+
+  const deleteItem = async (e) => {
+    // TODO: confirmation box
+    try {
+      await toBuyApiService.deleteOne(tb.id);
+      dispatch({ type: "deleteToBuy", value: tb.id });
+    } catch (error) {
+      alert("error: " + error.message);
+    }
+  };
+
   const setComment = async (text) => {
     try {
       await toBuyApiService.patchOne(tb.id, {
@@ -29,7 +43,11 @@ const ToBuyItem = ({ tb }) => {
     }
   };
   return (
-    <div>
+    <div
+      className="tbitem"
+      onMouseEnter={(e) => setHover(true)}
+      onMouseLeave={(e) => setHover(false)}
+    >
       <Checkbox onChange={markBought}>{tb.item.name}</Checkbox>
       <Typography.Text
         style={{ display: "inline-block" }}
@@ -38,6 +56,13 @@ const ToBuyItem = ({ tb }) => {
       >
         {tb.comment}
       </Typography.Text>
+      <span className="actions">
+        <Tooltip title="Kasuj">
+          <Button onClick={deleteItem} type="text" size="small" danger>
+            <DeleteOutlined />
+          </Button>
+        </Tooltip>
+      </span>
     </div>
   );
 };

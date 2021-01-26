@@ -8,6 +8,8 @@ import { toBuyApiService, itemsApiService } from "../../api";
 
 import { Store, Dispatch } from "../../data/Store";
 
+import "./index.less";
+
 const ListItem = ({ item }) => {
   const { tobuy } = useContext(Store);
   const dispatch = useContext(Dispatch);
@@ -49,7 +51,7 @@ const ListItem = ({ item }) => {
     tobuy.find((tb) => tb.item_id === item_id) !== undefined;
 
   return (
-    <>
+    <div className="listitem">
       <Button
         type="primary"
         size="small"
@@ -58,16 +60,14 @@ const ListItem = ({ item }) => {
       >
         <PlusOutlined />
       </Button>
-      <span style={{ marginRight: "auto", marginLeft: "1rem" }}>
-        {item.name}
-      </span>
-      <div style={{ float: "right" }}>
+      <div style={{ marginRight: "auto", marginLeft: "1rem" }}>{item.name}</div>
+      <div>
         <Category categoryId={item.category_id} onChange={setCategory} />
         <Button type="default" danger size="small" onClick={deleteItem}>
           <DeleteOutlined />
         </Button>
       </div>
-    </>
+    </div>
   );
 };
 
