@@ -21,3 +21,8 @@ export const patchItemAtIndex = (items, index, patch) => [
   { ...items[index], ...patch },
   ...items.slice(index + 1),
 ];
+
+export const patchItemByID = (items, id, patch) => {
+  const index = findIndexByID(items, id);
+  return index !== -1 ? patchItemAtIndex(items, index, patch) : items;
+};

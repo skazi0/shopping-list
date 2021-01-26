@@ -5,7 +5,7 @@ import {
   categoriesApiService,
   toBuyApiService,
 } from "../../api";
-import { findIndexByID, patchItemAtIndex } from "../../utils";
+import { patchItemByID } from "../../utils";
 
 const initialState = {
   items: [],
@@ -34,27 +34,25 @@ const storeReducer = (state, action) => {
         items: state.items.filter((item) => item.id !== action.value.id),
         tobuy: state.tobuy.filter((tb) => tb.item_id !== action.value.id),
       };
-    case "setItemCategory": {
-      const index = findIndexByID(state.items, action.item.id);
+    case "setItemCategory":
       return {
         ...state,
-        items: patchItemAtIndex(state.items, index, {
+        items: patchItemByID(state.items, action.item.id, {
           category_id: action.value.id,
         }),
       };
-    }
     case "addToBuy":
       return {
         ...state,
         tobuy: [...state.tobuy, action.value],
       };
-    case "setToBuyComment": {
-      const index = findIndexByID(state.tobuy, action.tb.id);
+    case "setToBuyComment":
       return {
         ...state,
-        tobuy: patchItemAtIndex(state.tobuy, index, { comment: action.value }),
+        tobuy: patchItemByID(state.tobuy, action.tb.id, {
+          comment: action.value,
+        }),
       };
-    }
     case "deleteToBuy":
       return {
         ...state,
