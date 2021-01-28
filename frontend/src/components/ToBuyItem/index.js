@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Checkbox, Typography, Button, Tooltip } from "antd";
+import { Checkbox, Typography, Button, Tooltip, Popconfirm } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
 import { toBuyApiService } from "../../api";
@@ -23,7 +23,6 @@ const ToBuyItem = ({ id, item, comment }) => {
   };
 
   const deleteItem = async (e) => {
-    // TODO: confirmation box
     try {
       await toBuyApiService.deleteOne(id);
       dispatch({ type: "deleteToBuy", id });
@@ -57,11 +56,13 @@ const ToBuyItem = ({ id, item, comment }) => {
         {comment}
       </Typography.Text>
       <span className="actions">
-        <Tooltip title="Kasuj">
-          <Button onClick={deleteItem} type="text" size="small" danger>
-            <DeleteOutlined />
-          </Button>
-        </Tooltip>
+        <Popconfirm onConfirm={deleteItem} title="Na pewno usunąć ten element?">
+          <Tooltip title="Kasuj">
+            <Button type="text" size="small" danger>
+              <DeleteOutlined />
+            </Button>
+          </Tooltip>
+        </Popconfirm>
       </span>
     </div>
   );
