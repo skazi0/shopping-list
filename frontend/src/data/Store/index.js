@@ -96,9 +96,9 @@ export const DataStore = ({ children }) => {
   }, []);
 
   return (
-    <Store.Provider value={state}>
-      <Dispatch.Provider value={dispatch}>{children}</Dispatch.Provider>
-    </Store.Provider>
+    <Dispatch.Provider value={dispatch}>
+      <Store.Provider value={state}>{children}</Store.Provider>
+    </Dispatch.Provider>
   );
 };
 
