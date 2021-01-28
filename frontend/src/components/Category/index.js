@@ -29,9 +29,7 @@ const Category = ({ categoryId: currentId, onChange }) => {
 
   return (
     <Dropdown overlay={menu} trigger={["click"]}>
-      <Button type="default" size="small">
-        {currentId}
-      </Button>
+      <Button type="default">{currentId}</Button>
     </Dropdown>
   );
 };

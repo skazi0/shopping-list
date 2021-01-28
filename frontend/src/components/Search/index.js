@@ -108,7 +108,6 @@ const Search = ({ items }) => {
       }}
     >
       <Input.Search
-        size="small"
         placeholder="co kupić?"
         onSearch={(v, e) => {
           // console.log("search", v);

@@ -52,19 +52,14 @@ const ListItem = ({ id, category_id, name }) => {
 
   return (
     <div className="listitem">
-      <Button
-        type="primary"
-        size="small"
-        disabled={isOnToBuy(id)}
-        onClick={addToBuy}
-      >
+      <Button type="primary" disabled={isOnToBuy(id)} onClick={addToBuy}>
         <PlusOutlined />
       </Button>
       <div style={{ marginRight: "auto", marginLeft: "1rem" }}>{name}</div>
       <div>
         <Category categoryId={category_id} onChange={setCategory} />
         <Popconfirm onConfirm={deleteItem} title="Na pewno usunąć ten element?">
-          <Button type="default" danger size="small">
+          <Button type="default" danger>
             <DeleteOutlined />
           </Button>
         </Popconfirm>

@@ -65,7 +65,7 @@ const ToBuyItem = ({ id, item, comment }) => {
       <span className="actions">
         <Popconfirm onConfirm={deleteItem} title="Na pewno usunąć ten element?">
           <Tooltip title="Kasuj">
-            <Button type="text" size="small" danger>
+            <Button type="text" danger>
               <DeleteOutlined />
             </Button>
           </Tooltip>

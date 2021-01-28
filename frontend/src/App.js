@@ -11,7 +11,7 @@ import "./App.less";
 
 function App() {
   return (
-    <ConfigProvider locale={pl}>
+    <ConfigProvider locale={pl} componentSize="small">
       <DataStore>
         <Row gutter={[16, 16]}>
           <Col xs={0} sm={24}></Col>
