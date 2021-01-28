@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Button, message } from "antd";
+import { Button, Popconfirm, message } from "antd";
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 
 import Category from "../Category";
@@ -63,9 +63,11 @@ const ListItem = ({ id, category_id, name }) => {
       <div style={{ marginRight: "auto", marginLeft: "1rem" }}>{name}</div>
       <div>
         <Category categoryId={category_id} onChange={setCategory} />
-        <Button type="default" danger size="small" onClick={deleteItem}>
-          <DeleteOutlined />
-        </Button>
+        <Popconfirm onConfirm={deleteItem} title="Na pewno usunąć ten element?">
+          <Button type="default" danger size="small">
+            <DeleteOutlined />
+          </Button>
+        </Popconfirm>
       </div>
     </div>
   );
