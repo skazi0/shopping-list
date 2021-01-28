@@ -67,20 +67,26 @@ export const DataStore = ({ children }) => {
   const [state, dispatch] = useReducer(storeReducer, initialState);
 
   const getCategories = async () => {
-    const categories = await categoriesApiService.getAll();
-    categories.sort((a, b) => b.priority - a.priority);
-    dispatch({ type: "setCategories", value: categories });
+    try {
+      const categories = await categoriesApiService.getAll();
+      categories.sort((a, b) => b.priority - a.priority);
+      dispatch({ type: "setCategories", value: categories });
+    } catch (error) {}
   };
 
   const getItems = async () => {
-    const items = await itemsApiService.getAll();
-    items.sort((a, b) => a.name.localeCompare(b.name));
-    dispatch({ type: "setItems", value: items });
+    try {
+      const items = await itemsApiService.getAll();
+      items.sort((a, b) => a.name.localeCompare(b.name));
+      dispatch({ type: "setItems", value: items });
+    } catch (error) {}
   };
 
   const getToBuy = async () => {
-    const tobuy = await toBuyApiService.getAll();
-    dispatch({ type: "setToBuy", value: tobuy });
+    try {
+      const tobuy = await toBuyApiService.getAll();
+      dispatch({ type: "setToBuy", value: tobuy });
+    } catch (error) {}
   };
 
   useEffect(() => {

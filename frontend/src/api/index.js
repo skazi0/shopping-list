@@ -1,3 +1,19 @@
+const handleError = async (response) => {
+  if (!response.ok) {
+    const text = await response.text();
+    // try parsing as json
+    let json;
+    try {
+      json = JSON.parse(text);
+    } catch (e) {
+      // fallback to plaintext
+      const error = { message: text };
+      throw error;
+    }
+    throw json;
+  }
+};
+
 class ApiService {
   constructor(endpoint) {
     this.endpoint = endpoint;
@@ -5,19 +21,15 @@ class ApiService {
 
   async getAll() {
     const response = await fetch(`${this.endpoint}`);
+    await handleError(response);
     const data = await response.json();
-    if (!response.ok) {
-      throw data;
-    }
     return data;
   }
 
   async getOne(id) {
     const response = await fetch(`${this.endpoint}/${id}`);
+    await handleError(response);
     const data = await response.json();
-    if (!response.ok) {
-      throw data;
-    }
     return data;
   }
 
@@ -29,10 +41,8 @@ class ApiService {
       },
       body: JSON.stringify(item),
     });
+    await handleError(response);
     const data = await response.json();
-    if (!response.ok) {
-      throw data;
-    }
     return data;
   }
 
@@ -40,10 +50,8 @@ class ApiService {
     const response = await fetch(`${this.endpoint}/${id}`, {
       method: "DELETE",
     });
+    await handleError(response);
     const data = await response.json();
-    if (!response.ok) {
-      throw data;
-    }
     return data;
   }
 
@@ -55,19 +63,15 @@ class ApiService {
       },
       body: JSON.stringify(patch),
     });
+    await handleError(response);
     const data = await response.json();
-    if (!response.ok) {
-      throw data;
-    }
     return data;
   }
 
   async runAction(id, action) {
     const response = await fetch(`${this.endpoint}/${id}/actions/${action}`);
+    await handleError(response);
     const data = await response.json();
-    if (!response.ok) {
-      throw data;
-    }
     return data;
   }
 }
