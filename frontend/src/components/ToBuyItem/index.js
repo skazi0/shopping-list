@@ -1,5 +1,12 @@
 import React, { useContext, useState } from "react";
-import { Checkbox, Typography, Button, Tooltip, Popconfirm } from "antd";
+import {
+  Checkbox,
+  Typography,
+  Button,
+  Tooltip,
+  Popconfirm,
+  message,
+} from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
 import { toBuyApiService } from "../../api";
@@ -18,7 +25,7 @@ const ToBuyItem = ({ id, item, comment }) => {
       await toBuyApiService.runAction(id, "buy");
       dispatch({ type: "deleteToBuy", id });
     } catch (error) {
-      alert("error: " + error.message);
+      message.error(error.message);
     }
   };
 
@@ -27,7 +34,7 @@ const ToBuyItem = ({ id, item, comment }) => {
       await toBuyApiService.deleteOne(id);
       dispatch({ type: "deleteToBuy", id });
     } catch (error) {
-      alert("error: " + error.message);
+      message.error(error.message);
     }
   };
 
@@ -38,7 +45,7 @@ const ToBuyItem = ({ id, item, comment }) => {
       });
       dispatch({ type: "setToBuyComment", id, value: text });
     } catch (error) {
-      alert("error: " + error.message);
+      message.error(error.message);
     }
   };
   return (

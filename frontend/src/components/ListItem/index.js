@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 
 import Category from "../Category";
@@ -21,7 +21,7 @@ const ListItem = ({ id, category_id, name }) => {
       });
       dispatch({ type: "setItemCategory", id, value: category });
     } catch (error) {
-      alert("error: " + error.message);
+      message.error(error.message);
     }
   };
 
@@ -33,7 +33,7 @@ const ListItem = ({ id, category_id, name }) => {
       });
       dispatch({ type: "addToBuy", value: response });
     } catch (error) {
-      alert("error: " + error.message);
+      message.error(error.message);
     }
   };
 
@@ -43,7 +43,7 @@ const ListItem = ({ id, category_id, name }) => {
       await itemsApiService.deleteOne(id);
       dispatch({ type: "deleteItem", id });
     } catch (error) {
-      alert("error: " + error.message);
+      message.error(error.message);
     }
   };
 

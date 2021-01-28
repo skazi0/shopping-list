@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import unidecode from "unidecode";
-import { AutoComplete, Input, Button } from "antd";
+import { AutoComplete, Input, Button, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
 import { Dispatch } from "../../data/Store";
@@ -50,7 +50,7 @@ const Search = ({ items }) => {
   };
 
   const addToBuy = async (text) => {
-    // console.log("adding", text);
+    //console.log("adding", text);
     let item = findByName(items, text);
     if (!item) {
       // TODO: check if items exists in the DB
@@ -63,7 +63,7 @@ const Search = ({ items }) => {
         });
         dispatch({ type: "addItem", value: item });
       } catch (error) {
-        alert("error: " + error.message);
+        message.error(error.message);
         return;
       }
     }
@@ -73,6 +73,9 @@ const Search = ({ items }) => {
       dispatch({ type: "addToBuy", value: response });
     } catch (error) {
       // duplicate error can be safely ignored
+      if (error.code !== 409) {
+        message.error(error.message);
+      }
     }
     setValue("");
     // this is not strictly needed as render will reset timer variable

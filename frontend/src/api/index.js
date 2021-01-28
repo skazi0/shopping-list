@@ -2,15 +2,16 @@ const handleError = async (response) => {
   if (!response.ok) {
     const text = await response.text();
     // try parsing as json
-    let json;
+    let error;
     try {
-      json = JSON.parse(text);
+      error = JSON.parse(text);
     } catch (e) {
-      // fallback to plaintext
-      const error = { message: text };
-      throw error;
+      // fallback to plaintext message
+      error = { message: text };
     }
-    throw json;
+    // add http code for error filtering in components
+    error.code = response.status;
+    throw error;
   }
 };
 
