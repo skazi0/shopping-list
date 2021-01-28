@@ -39,7 +39,7 @@ const ToBuy = () => {
         <div key={category.id}>
           <Divider orientation="left">{category.name}</Divider>
           {category.tobuy.map((tb) => (
-            <ToBuyItem key={tb.id} tb={tb} />
+            <ToBuyItem key={tb.id} {...tb} />
           ))}
         </div>
       ))}

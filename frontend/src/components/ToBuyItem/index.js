@@ -8,15 +8,15 @@ import { Dispatch } from "../../data/Store";
 
 import "./index.less";
 
-const ToBuyItem = ({ tb }) => {
+const ToBuyItem = ({ id, item, comment }) => {
   const dispatch = useContext(Dispatch);
   const [hover, setHover] = useState(false);
 
   const markBought = async (e) => {
     if (!e.target.checked) return;
     try {
-      await toBuyApiService.runAction(tb.id, "buy");
-      dispatch({ type: "deleteToBuy", value: tb.id });
+      await toBuyApiService.runAction(id, "buy");
+      dispatch({ type: "deleteToBuy", id });
     } catch (error) {
       alert("error: " + error.message);
     }
@@ -25,8 +25,8 @@ const ToBuyItem = ({ tb }) => {
   const deleteItem = async (e) => {
     // TODO: confirmation box
     try {
-      await toBuyApiService.deleteOne(tb.id);
-      dispatch({ type: "deleteToBuy", value: tb.id });
+      await toBuyApiService.deleteOne(id);
+      dispatch({ type: "deleteToBuy", id });
     } catch (error) {
       alert("error: " + error.message);
     }
@@ -34,10 +34,10 @@ const ToBuyItem = ({ tb }) => {
 
   const setComment = async (text) => {
     try {
-      await toBuyApiService.patchOne(tb.id, {
+      await toBuyApiService.patchOne(id, {
         comment: text,
       });
-      dispatch({ type: "setToBuyComment", tb, value: text });
+      dispatch({ type: "setToBuyComment", id, value: text });
     } catch (error) {
       alert("error: " + error.message);
     }
@@ -48,13 +48,13 @@ const ToBuyItem = ({ tb }) => {
       onMouseEnter={(e) => setHover(true)}
       onMouseLeave={(e) => setHover(false)}
     >
-      <Checkbox onChange={markBought}>{tb.item.name}</Checkbox>
+      <Checkbox onChange={markBought}>{item.name}</Checkbox>
       <Typography.Text
         style={{ display: "inline-block" }}
         type="secondary"
         editable={{ onChange: setComment, tooltip: "Komentarz" }}
       >
-        {tb.comment}
+        {comment}
       </Typography.Text>
       <span className="actions">
         <Tooltip title="Kasuj">

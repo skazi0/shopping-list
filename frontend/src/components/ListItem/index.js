@@ -10,16 +10,16 @@ import { Store, Dispatch } from "../../data/Store";
 
 import "./index.less";
 
-const ListItem = ({ item }) => {
+const ListItem = ({ id, category_id, name }) => {
   const { tobuy } = useContext(Store);
   const dispatch = useContext(Dispatch);
 
   const setCategory = async (category) => {
     try {
-      await itemsApiService.patchOne(item.id, {
+      await itemsApiService.patchOne(id, {
         category_id: category.id,
       });
-      dispatch({ type: "setItemCategory", item: item, value: category });
+      dispatch({ type: "setItemCategory", id, value: category });
     } catch (error) {
       alert("error: " + error.message);
     }
@@ -28,7 +28,7 @@ const ListItem = ({ item }) => {
   const addToBuy = async () => {
     try {
       const response = await toBuyApiService.addOne({
-        item_id: item.id,
+        item_id: id,
         comment: "",
       });
       dispatch({ type: "addToBuy", value: response });
@@ -40,8 +40,8 @@ const ListItem = ({ item }) => {
   const deleteItem = async () => {
     // TODO: confirmation box
     try {
-      await itemsApiService.deleteOne(item.id);
-      dispatch({ type: "deleteItem", value: item });
+      await itemsApiService.deleteOne(id);
+      dispatch({ type: "deleteItem", id });
     } catch (error) {
       alert("error: " + error.message);
     }
@@ -55,14 +55,14 @@ const ListItem = ({ item }) => {
       <Button
         type="primary"
         size="small"
-        disabled={isOnToBuy(item.id)}
+        disabled={isOnToBuy(id)}
         onClick={addToBuy}
       >
         <PlusOutlined />
       </Button>
-      <div style={{ marginRight: "auto", marginLeft: "1rem" }}>{item.name}</div>
+      <div style={{ marginRight: "auto", marginLeft: "1rem" }}>{name}</div>
       <div>
-        <Category categoryId={item.category_id} onChange={setCategory} />
+        <Category categoryId={category_id} onChange={setCategory} />
         <Button type="default" danger size="small" onClick={deleteItem}>
           <DeleteOutlined />
         </Button>

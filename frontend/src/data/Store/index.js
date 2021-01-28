@@ -31,13 +31,13 @@ const storeReducer = (state, action) => {
     case "deleteItem":
       return {
         ...state,
-        items: state.items.filter((item) => item.id !== action.value.id),
-        tobuy: state.tobuy.filter((tb) => tb.item_id !== action.value.id),
+        items: state.items.filter((item) => item.id !== action.id),
+        tobuy: state.tobuy.filter((tb) => tb.item_id !== action.id),
       };
     case "setItemCategory":
       return {
         ...state,
-        items: patchItemByID(state.items, action.item.id, {
+        items: patchItemByID(state.items, action.id, {
           category_id: action.value.id,
         }),
       };
@@ -49,14 +49,14 @@ const storeReducer = (state, action) => {
     case "setToBuyComment":
       return {
         ...state,
-        tobuy: patchItemByID(state.tobuy, action.tb.id, {
+        tobuy: patchItemByID(state.tobuy, action.id, {
           comment: action.value,
         }),
       };
     case "deleteToBuy":
       return {
         ...state,
-        tobuy: state.tobuy.filter((tb) => tb.id !== action.value),
+        tobuy: state.tobuy.filter((tb) => tb.id !== action.id),
       };
     default:
       throw new Error("Unknow action type");

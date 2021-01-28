@@ -11,7 +11,7 @@ const List = () => {
 
   const Row = ({ index, style }) => (
     <AList.Item style={style}>
-      <ListItem key={items[index].id} item={items[index]} />
+      <ListItem key={items[index].id} {...items[index]} />
     </AList.Item>
   );
 
