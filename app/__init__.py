@@ -12,7 +12,7 @@ app.config.from_envvar('APP_CONFIG')
 # register before creating API to avoid overwriting
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return app.send_static_file('index.html')
 
 
 # disable pooling to avoid MySQL warnings about unused connections being closed
