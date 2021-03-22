@@ -1,0 +1,20 @@
+#!/bin/sh
+set -e
+
+chown www-data:www-data /opt/shopping-list /var/log/shopping-list /etc/uwsgi/apps-available/shopping-list.ini
+chmod 0770 /opt/shopping-list
+chmod 0755 /var/log/shopping-list
+chmod 0640 /etc/uwsgi/apps-available/shopping-list.ini
+
+# create venv and install deps
+cd /opt/shopping-list
+virtualenv venv -p python3
+venv/bin/pip install -r requirements.txt
+
+export APP_CONFIG=/opt/shopping-list/shopping-list.cfg
+if [ -f "$APP_CONFIG" ]; then
+    # migrate database
+    venv/bin/python manage.py db upgrade
+fi
+
+exit 0
