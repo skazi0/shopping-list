@@ -8,7 +8,7 @@ chmod 0640 /etc/uwsgi/apps-available/shopping-list.ini
 
 # create venv and install deps
 cd /opt/shopping-list
-virtualenv venv -p python3
+test -x venv/bin/python || virtualenv venv -p python3
 venv/bin/pip install -r requirements.txt
 
 export APP_CONFIG=/opt/shopping-list/shopping-list.cfg
