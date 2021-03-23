@@ -13,5 +13,6 @@
 - python manage.py runserver
 
 # frontend
+- cd frontend
 - npm install
 - npm run build
