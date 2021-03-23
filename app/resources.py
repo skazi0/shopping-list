@@ -1,5 +1,5 @@
 from flask import request, send_file
-from flask_restplus import Resource, fields, marshal
+from flask_restx import Resource, fields, marshal
 from werkzeug.exceptions import BadRequest, NotFound, Conflict
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import NoResultFound

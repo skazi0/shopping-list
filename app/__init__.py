@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy as SQLAlchemyBase
-from flask_restplus import Api
+from flask_restx import Api
 
 from app.config import BaseConfig
 
