@@ -7,7 +7,7 @@
     "@ant-design/icons": "^4.4.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^12.6.0",
+    "@testing-library/user-event": "^13.0.10",
     "antd": "^4.14.1",
     "craco": "0.0.3",
     "craco-less": "^1.17.1",
