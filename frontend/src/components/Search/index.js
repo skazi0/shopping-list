@@ -50,6 +50,11 @@ const Search = ({ items }) => {
   };
 
   const addToBuy = async (text) => {
+    // don't add blank items
+    text = text.trim();
+    if (!text) {
+      return;
+    }
     //console.log("adding", text);
     let item = findByName(items, text);
     if (!item) {
