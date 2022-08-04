@@ -8,6 +8,7 @@ import {
 import { patchItemByID } from "../../utils";
 
 const initialState = {
+  filter: { category_id: -1 },
   items: [],
   categories: [],
   tobuy: [],
@@ -57,6 +58,11 @@ const storeReducer = (state, action) => {
       return {
         ...state,
         tobuy: state.tobuy.filter((tb) => tb.id !== action.id),
+      };
+    case "setFilter":
+      return {
+        ...state,
+        filter: action.value,
       };
     default:
       throw new Error("Unknow action type");
