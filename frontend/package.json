@@ -18,7 +18,7 @@
     "web-vitals": "^1.1.1"
   },
   "devDependencies": {
-    "react-scripts": "4.0.3"
+    "react-scripts": "5.0.1"
   },
   "proxy": "http://localhost:3001/",
   "scripts": {
