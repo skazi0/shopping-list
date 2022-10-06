@@ -1,7 +1,7 @@
 ## Shopping List App
 # backend
 # usage
-- git clone https://github.com/skazi0/flask-skeleton.git
+- git clone https://github.com/skazi0/shopping-list
 - virtualenv venv
 - . venv/bin/activate
 - pip install -r requirements.txt
