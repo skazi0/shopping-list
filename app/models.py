@@ -39,7 +39,7 @@ class Item(db.Model):
                                back_populates="item", 
                                cascade="all, delete-orphan")
 
-    count = column_property(select([func.count(LogEntry.bought_date)]).
+    count = column_property(select(func.count(LogEntry.bought_date)).
                             where(LogEntry.item_id==id).
                             correlate_except(LogEntry))
 
